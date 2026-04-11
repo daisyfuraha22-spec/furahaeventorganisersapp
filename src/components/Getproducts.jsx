@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Loader from './Loader';
 import { useNavigate } from 'react-router-dom';
+import Footer from './Footer';
 
 
 const GetProducts = () => {
@@ -82,6 +83,7 @@ const GetProducts = () => {
            </div>
         </div>
         )   )}
+        <Footer/>
        
     </div>
   )

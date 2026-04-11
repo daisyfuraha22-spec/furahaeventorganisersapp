@@ -36,3 +36,47 @@
     transform: rotate(360deg);
   }
 }
+
+/* HEADER STYLING */
+.custom-header {
+  background: #ffb6c1; /* soft pink */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 25px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* LOGO AREA */
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* NAV LINKS */
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  background: white;
+  color: #ff69b4;
+}
