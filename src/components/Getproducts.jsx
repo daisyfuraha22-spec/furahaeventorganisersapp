@@ -1,93 +1,117 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import Loader from './Loader';
 import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 
-
 const GetProducts = () => {
 
-    // Initialize hook to help you manage the state of your application
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-    // declare the navigate hook
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    // below we specify the image base url
-    const img_url = "https://daisyf.alwaysdata.net/static/images/"
+  const img_url = "https://daisyf.alwaysdata.net/static/images/";
 
-    // create a function to help you fetch the products from your API
-    const fetchProducts = async() =>{
-        try{
-            //4. update the loading hook
-            setLoading(true)
-
-            // 5.   Interact with your endpoint for fetching the products
-            const response = await axios.get("https://daisyf.alwaysdata.net/api/get_products")
-
-            // 6. update the products hook with the response given from the API
-            setProducts(response.data)
-
-            // 7. Set the loading hook back to default
-            setLoading(false)
-        }
-        catch(error){
-            // step 8.
-            // if there is an error
-            // set the loading back to default
-            setLoading(false)
-
-            // update the error hook with a message
-            setError(error.message)
-        }
+  //  YOUR CUSTOM PACKAGES (YOU CONTROL TEXT HERE)
+  const customPackages = [
+    {
+      title: "BASIC PACKAGE - Elegant Essentials",
+      price: "KSH 25000",
+      
+      description:
+        "Perfect for small or intimate events, this package covers the core elements needed to bring your vision to life. It includes event styling guidance, basic décor setup, vendor coordination, and on-the-day supervision."
+    },
+    {
+      title: "STANDARD PACKAGE - Signature Experience",
+      price: "KSH 45000",
+      description:
+        "Designed for clients who want a beautifully styled and well-coordinated event, this package includes full décor design, theme customization, vendor management, and on-site coordination."
+    },
+    {
+      title: "PREMIUM PACKAGE - Luxury and Full Service",
+      price: "KSH 50000",
+      description:
+        "Our all-inclusive package offers a stress-free, luxury experience from start to finish. It includes complete event planning, premium décor, vendor sourcing, and full event coordination."
     }
+  ];
 
-    // we shall use the useEffect hook. This hook enables us to automatically re-render new features incase of any changes.
-    useEffect(() => {
-        fetchProducts()
-    }, [])
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
 
-    // console.log("The products fetched are: ",products)
+      const response = await axios.get(
+        "https://daisyf.alwaysdata.net/api/get_products"
+      );
 
+      setProducts(response.data);
+      setLoading(false);
 
+    } catch (error) {
+      setLoading(false);
+      setError(error.message);
+    }
+  };
 
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
-    <div className='row'>
-        <h3 className="text-primary">Available products</h3>
+    <section className="row">
+      <h1 className="text-center">Our Packages</h1>
 
-        {loading && <Loader/> }
-        <h4 className="text-danger"> {error} </h4>
+      {loading && <Loader />}
+      <h4 className="text-danger text-center">{error}</h4>
 
-        {/* map the products fetched from the API to the user interface */}
+      {products.slice(0, 3).map((product, index) => (
+        <div className="col-lg-4" key={index}>
+          <div className="card shadow">
 
-        {products.map((product) => (
-             <div className="col-md-3 justify-content-center mb-3">
-           <div className="card shadow">
-             <img
-             src={img_url + product.product_photo}
-             alt="product name"
-             className='product_img mt-3' />
+            {/* TITLE */}
+            <div className="card-header">
+              <h5 className="fw-bold f-1 text-danger text-center">
+                {customPackages[index].title}
+              </h5>
+            </div>
 
-             <div className="card-body">
-                <h5 className="text-primary"> {product.product_name} </h5>
+            {/* IMAGE */}
+            <div className="card-header">
+              <img
+                src={img_url + product.product_photo}
+                alt="package"
+                width="100%"
+                height="250px"
+              />
+            </div>
 
-                <p className="text-dark"> {product.product_description.slice(0, 100)}... </p>
+            {/* DESCRIPTION */}
+            <div className="card-footer">
+              <p className="text-center text-info f-1 fw-bold">
+                {customPackages[index].description}
+              </p>
+            </div>
 
-                <h4 className="text-warning"> Kes {product.product_cost} </h4>
+            {/* BUTTON */}
+            <div className="text-center mt-5">
+              <button
+                className="simple-text btn btn-light px-4 py-2 fw-bold"
+                onClick={() =>
+                  navigate("/makepayment", { state: { product } })
+                }
+              >
+                Purchase Now - {customPackages[index].price}
+              </button>
+            </div>
 
-                <button className="btn btn-outline-info" onClick={() => navigate("/makepayment", {state : {product}})}>Purchase Now</button>
-             </div>
-           </div>
+          </div>
         </div>
-        )   )}
-        <Footer/>
-       
-    </div>
-  )
-}
+      ))}
 
+      <Footer />
+    </section>
+  );
+};
 
 export default GetProducts;
