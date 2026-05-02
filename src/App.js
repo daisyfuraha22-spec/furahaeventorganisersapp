@@ -9,6 +9,7 @@ import Addproducts from './components/Addproducts';
 import Getproducts from './components/Getproducts';
 import Notfound from './components/Notfound';
 import Makepayment from './components/Makepayment';
+import Gallery from './components/Gallery';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Link to="/signin">Sign In</Link>
             <Link to="/signup">Sign Up</Link>
             <Link to="/addproducts">Add Products</Link>
+            <Link to="/gallery">Gallery</Link>
           </nav>
         </header>
 
@@ -44,6 +46,7 @@ function App() {
           <Route path='/addproducts' element={<Addproducts />} />
           <Route path='/makepayment' element={<Makepayment />} />
           <Route path='*' element={<Notfound />} />
+          <Route path='/gallery' element={<Gallery/>}/>
         </Routes>
 
       </div>

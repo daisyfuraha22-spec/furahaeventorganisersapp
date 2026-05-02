@@ -80,3 +80,19 @@
   background: white;
   color: #ff69b4;
 }
+
+.pink-btn {
+  background-color: rgb(129, 59, 70); 
+  color: white;
+  padding: 10px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  transition: 0.3s ease;
+}
+
+.pink-btn:hover {
+  background-color: hsl(351, 74%, 70%);
+  color: white;
+}

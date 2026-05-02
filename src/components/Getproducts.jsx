@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Loader from './Loader';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import Carousel from './Carousel';
 
@@ -17,28 +17,7 @@ const GetProducts = () => {
 
   
 
-  //  YOUR CUSTOM PACKAGES (YOU CONTROL TEXT HERE)
-  const customPackages = [
-    {
-      title: "BASIC PACKAGE - Elegant Essentials",
-      price: "KSH 25000",
-      
-      description:
-        "Perfect for small or intimate events, this package covers the core elements needed to bring your vision to life. It includes event styling guidance, basic décor setup, vendor coordination, and on-the-day supervision."
-    },
-    {
-      title: "STANDARD PACKAGE - Signature Experience",
-      price: "KSH 45000",
-      description:
-        "Designed for clients who want a beautifully styled and well-coordinated event, this package includes full décor design, theme customization, vendor management, and on-site coordination."
-    },
-    {
-      title: "PREMIUM PACKAGE - Luxury and Full Service",
-      price: "KSH 50000",
-      description:
-        "Our all-inclusive package offers a stress-free, luxury experience from start to finish. It includes complete event planning, premium décor, vendor sourcing, and full event coordination."
-    }
-  ];
+  
 
   const fetchProducts = async () => {
     try {
@@ -63,7 +42,7 @@ const GetProducts = () => {
 
   return (
     <section className="row">
-      <h1 className="text-center">Our Packages</h1>
+      
 
       <Carousel/>
       <div class="col-md-12 p-4 text-black">
@@ -209,57 +188,63 @@ const GetProducts = () => {
 
                   </div>
 
+
+                   <div class="container">
+                      {/* <!-- title --> */}
+                       <div class="text-center mb-5">
+                        <h2 class=" simple-topic fw-bold">Event Gallery</h2>
+
+                       </div>
+                       <div class="row g-4">
+                        <div class="col-md-3 col-sm-6">
+                          <img src="images/jennifer-kalenberg-Rkj0ms67lio-unsplash.jpg" alt="jpg"   width="500px" height="300px"/>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                          <img src="images/jonathan-borba-B_R3rmJPeSE-unsplash.jpg" alt="jpg" width="500px" height="300px"  />
+
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                          <img src="images/tabitha-turner-GYQuKGktCt4-unsplash.jpg" alt="jpg" width="500px" height="300px"  />
+
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                         <img src="images/al-elmes-ULHxWq8reao-unsplash.jpg" alt="jpg" width="500px" height="300px" />
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                          <img src="images/tamara-govedarovic-7d0-zkJ51Yk-unsplash.jpg" alt="jpg" width="500px" height="300px" />
+
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                          <img src="images/maria-luisa-queiroz-k6g0JxLXRP0-unsplash.jpg" alt="jpg" width="500px" height="300px" />
+
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                          <img src="images/ibrahim-boran-m8YjB0noWiY-unsplash.jpg" alt="jpg" width="500px" height="300px" />
+                          
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                          <img src="images/ridham-supriyanto-4FGhD_iGuqg-unsplash.jpg" alt="jpg" width="500px" height="300px" />
+
+                        </div>
+
+                       </div>
+                       {/* <!-- button --> */}
+                       <nav className="text-center mt-5" >
+                        <Link to="/gallery" className="pink-btn"> View Full Gallery
+                        </Link>
+
+                       </nav>
+                        
+
+                    </div>
+
       
 
       
 
       {loading && <Loader />}
-      <h4 className="text-danger text-center">{error}</h4>
-
-      {products.slice(0, 3).map((product, index) => (
-        <div className="col-lg-4" key={index}>
-          <div className="card shadow">
-
-            {/* TITLE */}
-            <div className="card-header">
-              <h5 className="fw-bold f-1 text-danger text-center">
-                {customPackages[index].title}
-              </h5>
-            </div>
-
-            {/* IMAGE */}
-            <div className="card-header">
-              <img
-                src={img_url + product.product_photo}
-                alt="package"
-                width="100%"
-                height="250px"
-              />
-            </div>
-
-            {/* DESCRIPTION */}
-            <div className="card-footer">
-              <p className="text-center text-info f-1 fw-bold">
-                {customPackages[index].description}
-              </p>
-            </div>
-
-            {/* BUTTON */}
-            <div className="text-center mt-5">
-              <button
-                className="simple-text btn btn-light px-4 py-2 fw-bold"
-                onClick={() =>
-                  navigate("/makepayment", { state: { product } })
-                }
-              >
-                Purchase Now - {customPackages[index].price}
-              </button>
-            </div>
-
-          </div>
-        </div>
-      ))}
-
+     
+     
       <Footer />
      
     </section>
