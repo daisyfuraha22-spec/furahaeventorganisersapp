@@ -47,7 +47,7 @@ const Carousel = () => {
 
             <div className="carousel-caption d-none d-md-block">
               <h5 className="fs-1 text-dark text-center fw-bold">
-                Make Your Valentines Unforgettable
+                Make Your Events Unforgettable
               </h5>
              
             </div>
