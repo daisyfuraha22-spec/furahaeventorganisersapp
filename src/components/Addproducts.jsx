@@ -25,7 +25,7 @@ const Addproducts = () => {
       formdata.append("product_photo", product_photo);
 
       const response = await axios.post(
-        "https://daisyf.alwaysdata.net/api/add_product.php",
+        "http://daisyf.alwaysdata.net/api/app_product",
         formdata
       );
 
