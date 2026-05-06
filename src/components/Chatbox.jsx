@@ -1,5 +1,82 @@
 import React, { useState, useRef, useEffect } from 'react';
 
+// ── Keyword Rules ─────────────────────────────────────────────────────────────
+
+const rules = [
+  {
+    keywords: ['hello', 'hi', 'hey', 'greet', 'good morning', 'good afternoon'],
+    response: "Hello! Welcome to Furaha Event Decorations! 🌸 I'm your event planning assistant. How can I help you today?",
+  },
+  {
+    keywords: ['service', 'offer', 'what do you do', 'provide', 'specialize'],
+    response: "We specialize in a variety of events including Weddings 💍, Birthdays 🎂, Baby Showers 👶, Corporate Events 💼, and Graduations 🎓. Which event are you planning?",
+  },
+  {
+    keywords: ['wedding', 'bride', 'groom', 'marriage', 'bridal'],
+    response: "Congratulations on your upcoming wedding! 💍 We offer full wedding decoration packages including floral arrangements, table settings, arch decor, and more. Would you like to know about our pricing?",
+  },
+  {
+    keywords: ['birthday', 'party', 'celebration', 'cake', 'bday'],
+    response: "Birthdays are our specialty! 🎉 We offer themed birthday decorations, balloon arrangements, photo backdrops, and full venue setups. Let us know the age and theme you have in mind!",
+  },
+  {
+    keywords: ['baby shower', 'baby', 'newborn', 'gender reveal'],
+    response: "How exciting — a new baby is on the way! 👶🎀 We create beautiful baby shower setups with soft color themes, floral touches, and stunning table arrangements. Ask us for a quote!",
+  },
+  {
+    keywords: ['corporate', 'company', 'office', 'business', 'conference', 'meeting'],
+    response: "We handle corporate events with elegance and professionalism. 💼 From conference decor to gala dinners, we ensure your brand is represented beautifully. Contact us for a custom corporate package.",
+  },
+  {
+    keywords: ['graduation', 'graduate', 'school', 'university', 'finish', 'ceremony'],
+    response: "Congratulations to the graduate! 🎓 We offer stunning graduation decor packages with custom backdrops, table setups, and themed decorations. Get in touch for a personalized quote!",
+  },
+  {
+    keywords: ['price', 'cost', 'how much', 'pricing', 'package', 'affordable', 'budget', 'kes', 'rate'],
+    response: "Our packages are priced in KES and vary based on event type, venue size, and decoration style. 💰 You can browse our packages on the Home page or contact us directly for a custom quote tailored to your budget!",
+  },
+  {
+    keywords: ['book', 'booking', 'reserve', 'appointment', 'consultation', 'schedule'],
+    response: "We'd love to work with you! 📅 To book a consultation, you can reach us directly through our contact details or purchase a package on our Home page. Our team will get back to you promptly!",
+  },
+  {
+    keywords: ['theme', 'color', 'design', 'style', 'decor', 'idea', 'inspiration'],
+    response: "We love bringing creative themes to life! 🎨 Popular choices include Rustic, Bohemian, Garden, Glamour, and Modern Minimalist. Visit our Gallery page to see our past work for inspiration!",
+  },
+  {
+    keywords: ['gallery', 'photo', 'picture', 'portfolio', 'past work', 'examples'],
+    response: "Check out our Gallery page to see our stunning past events! 📸 From elegant weddings to vibrant birthday parties — we're proud of every event we've decorated.",
+  },
+  {
+    keywords: ['contact', 'reach', 'call', 'email', 'whatsapp', 'phone', 'number'],
+    response: "You can reach us via phone or email. 📞 Our details are available on the website. We're always happy to chat about your event vision — don't hesitate to get in touch!",
+  },
+  {
+    keywords: ['location', 'where', 'nairobi', 'kenya', 'area', 'deliver', 'travel'],
+    response: "We are based in Kenya 🇰🇪 and serve clients across Nairobi and surrounding areas. For events outside Nairobi, travel fees may apply. Contact us to discuss your location!",
+  },
+  {
+    keywords: ['thank', 'thanks', 'appreciate', 'grateful'],
+    response: "You're very welcome! 😊 It's our pleasure to help you plan a memorable event. Feel free to ask anything else!",
+  },
+  {
+    keywords: ['bye', 'goodbye', 'see you', 'later', 'take care'],
+    response: "Goodbye! 🌸 Thank you for choosing Furaha Event Decorations. We look forward to making your event unforgettable!",
+  },
+];
+
+const getResponse = (input) => {
+  const lower = input.toLowerCase();
+  for (const rule of rules) {
+    if (rule.keywords.some((kw) => lower.includes(kw))) {
+      return rule.response;
+    }
+  }
+  return "I'm not sure about that, but I'd love to help! 😊 You can ask me about our services, packages, pricing, themes, or how to book a consultation. Or visit our Home and Gallery pages for more info!";
+};
+
+// ── Component ─────────────────────────────────────────────────────────────────
+
 const Chatbox = () => {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -16,47 +93,21 @@ const Chatbox = () => {
     if (open) bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, open]);
 
-  const sendMessage = async () => {
-    const text = input.trim();
+  const sendMessage = (overrideText) => {
+    const text = (overrideText ?? input).trim();
     if (!text || loading) return;
 
     const userMsg = { role: 'user', content: text };
-    const updatedMessages = [...messages, userMsg];
-    setMessages(updatedMessages);
+    setMessages((prev) => [...prev, userMsg]);
     setInput('');
     setLoading(true);
 
-    try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
-          system: `You are a warm, elegant AI assistant for Furaha Event Decorations — a premium event planning company based in Kenya. 
-You help clients with:
-- Information about event services: weddings, birthdays, corporate events, baby showers, graduations
-- Pricing guidance (packages are in KES)
-- Decoration themes and ideas
-- Booking and consultation inquiries
-- General event planning advice
-
-Tone: Friendly, professional, and enthusiastic about creating beautiful events. Keep responses concise and helpful. Use occasional tasteful emojis. Always encourage clients to explore the website or book a consultation for personalized quotes.`,
-          messages: updatedMessages.map((m) => ({ role: m.role, content: m.content })),
-        }),
-      });
-
-      const data = await response.json();
-      const reply = data.content?.map((b) => b.text || '').join('') || "I'm sorry, I couldn't process that. Please try again.";
+    // Simulate a short typing delay
+    setTimeout(() => {
+      const reply = getResponse(text);
       setMessages((prev) => [...prev, { role: 'assistant', content: reply }]);
-    } catch (err) {
-      setMessages((prev) => [
-        ...prev,
-        { role: 'assistant', content: 'Oops! Something went wrong. Please try again shortly. ' },
-      ]);
-    } finally {
       setLoading(false);
-    }
+    }, 800);
   };
 
   const handleKey = (e) => {
@@ -380,7 +431,7 @@ Tone: Friendly, professional, and enthusiastic about creating beautiful events. 
         className={`furaha-chat-toggle ${open ? 'is-open' : ''}`}
         onClick={() => setOpen((v) => !v)}
         title={open ? 'Close Assistant' : 'Chat with Furaha Assistant'}
-        aria-label="Open AI chat assistant"
+        aria-label="Open chat assistant"
       >
         {open ? (
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -398,7 +449,7 @@ Tone: Friendly, professional, and enthusiastic about creating beautiful events. 
       </button>
 
       {/* CHAT WINDOW */}
-      <div className={`furaha-chat-window ${open ? 'is-open' : ''}`} role="dialog" aria-label="Furaha Event Decorations AI Assistant">
+      <div className={`furaha-chat-window ${open ? 'is-open' : ''}`} role="dialog" aria-label="Furaha Event Decorations Assistant">
 
         {/* Header */}
         <div className="furaha-chat-header">
@@ -437,7 +488,7 @@ Tone: Friendly, professional, and enthusiastic about creating beautiful events. 
               <button
                 key={q}
                 className="furaha-quick-btn"
-                onClick={() => { setInput(q); setTimeout(sendMessage, 50); }}
+                onClick={() => sendMessage(q)}
               >
                 {q}
               </button>
@@ -455,7 +506,12 @@ Tone: Friendly, professional, and enthusiastic about creating beautiful events. 
             onKeyDown={handleKey}
             rows={1}
           />
-          <button className="furaha-send-btn" onClick={sendMessage} disabled={loading || !input.trim()} aria-label="Send message">
+          <button
+            className="furaha-send-btn"
+            onClick={() => sendMessage()}
+            disabled={loading || !input.trim()}
+            aria-label="Send message"
+          >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="22" y1="2" x2="11" y2="13"/>
               <polygon points="22 2 15 22 11 13 2 9 22 2"/>
@@ -463,7 +519,7 @@ Tone: Friendly, professional, and enthusiastic about creating beautiful events. 
           </button>
         </div>
 
-        <div className="furaha-chat-brand">Powered by Furaha  </div>
+        <div className="furaha-chat-brand">Powered by Furaha </div>
       </div>
     </>
   );
