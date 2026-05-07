@@ -5,51 +5,51 @@ import React, { useState, useRef, useEffect } from 'react';
 const rules = [
   {
     keywords: ['hello', 'hi', 'hey', 'greet', 'good morning', 'good afternoon'],
-    response: "Hello! Welcome to Furaha Event Decorations! 🌸 I'm your event planning assistant. How can I help you today?",
+    response: "Hello! Welcome to Furaha Event Decorations! I'm your event planning assistant. How can I help you today?",
   },
   {
     keywords: ['service', 'offer', 'what do you do', 'provide', 'specialize'],
-    response: "We specialize in a variety of events including Weddings 💍, Birthdays 🎂, Baby Showers 👶, Corporate Events 💼, and Graduations 🎓. Which event are you planning?",
+    response: "We specialize in a variety of events including Weddings , Birthdays , Baby Showers , Corporate Events , and Graduations . Which event are you planning?",
   },
   {
     keywords: ['wedding', 'bride', 'groom', 'marriage', 'bridal'],
-    response: "Congratulations on your upcoming wedding! 💍 We offer full wedding decoration packages including floral arrangements, table settings, arch decor, and more. Would you like to know about our pricing?",
+    response: "Congratulations on your upcoming wedding!  We offer full wedding decoration packages including floral arrangements, table settings, arch decor, and more. Would you like to know about our pricing?",
   },
   {
     keywords: ['birthday', 'party', 'celebration', 'cake', 'bday'],
-    response: "Birthdays are our specialty! 🎉 We offer themed birthday decorations, balloon arrangements, photo backdrops, and full venue setups. Let us know the age and theme you have in mind!",
+    response: "Birthdays are our specialty! We offer themed birthday decorations, balloon arrangements, photo backdrops, and full venue setups. Let us know the age and theme you have in mind!",
   },
   {
     keywords: ['baby shower', 'baby', 'newborn', 'gender reveal'],
-    response: "How exciting — a new baby is on the way! 👶🎀 We create beautiful baby shower setups with soft color themes, floral touches, and stunning table arrangements. Ask us for a quote!",
+    response: "How exciting — a new baby is on the way!  We create beautiful baby shower setups with soft color themes, floral touches, and stunning table arrangements. Ask us for a quote!",
   },
   {
     keywords: ['corporate', 'company', 'office', 'business', 'conference', 'meeting'],
-    response: "We handle corporate events with elegance and professionalism. 💼 From conference decor to gala dinners, we ensure your brand is represented beautifully. Contact us for a custom corporate package.",
+    response: "We handle corporate events with elegance and professionalism.  From conference decor to gala dinners, we ensure your brand is represented beautifully. Contact us for a custom corporate package.",
   },
   {
     keywords: ['graduation', 'graduate', 'school', 'university', 'finish', 'ceremony'],
-    response: "Congratulations to the graduate! 🎓 We offer stunning graduation decor packages with custom backdrops, table setups, and themed decorations. Get in touch for a personalized quote!",
+    response: "Congratulations to the graduate!  We offer stunning graduation decor packages with custom backdrops, table setups, and themed decorations. Get in touch for a personalized quote!",
   },
   {
     keywords: ['price', 'cost', 'how much', 'pricing', 'package', 'affordable', 'budget', 'kes', 'rate'],
-    response: "Our packages are priced in KES and vary based on event type, venue size, and decoration style. 💰 You can browse our packages on the Home page or contact us directly for a custom quote tailored to your budget!",
+    response: "Our packages are priced in KES and vary based on event type, venue size, and decoration style.  You can browse our packages on the Home page or contact us directly for a custom quote tailored to your budget!",
   },
   {
     keywords: ['book', 'booking', 'reserve', 'appointment', 'consultation', 'schedule'],
-    response: "We'd love to work with you! 📅 To book a consultation, you can reach us directly through our contact details or purchase a package on our Home page. Our team will get back to you promptly!",
+    response: "We'd love to work with you!  To book a consultation, you can reach us directly through our contact details or purchase a package on our Home page. Our team will get back to you promptly!",
   },
   {
     keywords: ['theme', 'color', 'design', 'style', 'decor', 'idea', 'inspiration'],
-    response: "We love bringing creative themes to life! 🎨 Popular choices include Rustic, Bohemian, Garden, Glamour, and Modern Minimalist. Visit our Gallery page to see our past work for inspiration!",
+    response: "We love bringing creative themes to life! Popular choices include Rustic, Bohemian, Garden, Glamour, and Modern Minimalist. Visit our Gallery page to see our past work for inspiration!",
   },
   {
     keywords: ['gallery', 'photo', 'picture', 'portfolio', 'past work', 'examples'],
-    response: "Check out our Gallery page to see our stunning past events! 📸 From elegant weddings to vibrant birthday parties — we're proud of every event we've decorated.",
+    response: "Check out our Gallery page to see our stunning past events!  From elegant weddings to vibrant birthday parties — we're proud of every event we've decorated.",
   },
   {
     keywords: ['contact', 'reach', 'call', 'email', 'whatsapp', 'phone', 'number'],
-    response: "You can reach us via phone or email. 📞 Our details are available on the website. We're always happy to chat about your event vision — don't hesitate to get in touch!",
+    response: "You can reach us via phone or email.  Our details are available on the website. We're always happy to chat about your event vision — don't hesitate to get in touch!",
   },
   {
     keywords: ['location', 'where', 'nairobi', 'kenya', 'area', 'deliver', 'travel'],
@@ -57,11 +57,11 @@ const rules = [
   },
   {
     keywords: ['thank', 'thanks', 'appreciate', 'grateful'],
-    response: "You're very welcome! 😊 It's our pleasure to help you plan a memorable event. Feel free to ask anything else!",
+    response: "You're very welcome!  It's our pleasure to help you plan a memorable event. Feel free to ask anything else!",
   },
   {
     keywords: ['bye', 'goodbye', 'see you', 'later', 'take care'],
-    response: "Goodbye! 🌸 Thank you for choosing Furaha Event Decorations. We look forward to making your event unforgettable!",
+    response: "Goodbye!  Thank you for choosing Furaha Event Decorations. We look forward to making your event unforgettable!",
   },
 ];
 
@@ -72,7 +72,7 @@ const getResponse = (input) => {
       return rule.response;
     }
   }
-  return "I'm not sure about that, but I'd love to help! 😊 You can ask me about our services, packages, pricing, themes, or how to book a consultation. Or visit our Home and Gallery pages for more info!";
+  return "I'm not sure about that, but I'd love to help!  You can ask me about our services, packages, pricing, themes, or how to book a consultation. Or visit our Home and Gallery pages for more info!";
 };
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -82,7 +82,7 @@ const Chatbox = () => {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: "Welcome to Furaha Event Decorations! ✨ I'm your personal event planning assistant. Ask me about our services, packages, pricing, or how we can make your dream event a reality!",
+      content: "Welcome to Furaha Event Decorations!  I'm your personal event planning assistant. Ask me about our services, packages, pricing, or how we can make your dream event a reality!",
     },
   ]);
   const [input, setInput] = useState('');
